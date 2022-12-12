@@ -1,9 +1,14 @@
 package com.gildedrose;
 
-public class TexttestFixture {
-    public static void main(String[] args) {
-        System.out.println("OMGHAI!");
+import org.approvaltests.Approvals;
+import org.junit.jupiter.api.Test;
 
+public class TexttestFixtureApprovalTest {
+
+    @Test
+    public void approvalTest(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("OMGHAI").append("\n");
         Item[] items = new Item[] {
                 new Item("+5 Dexterity Vest", 10, 20), //
                 new Item("Aged Brie", 2, 0), //
@@ -20,15 +25,25 @@ public class TexttestFixture {
 
         int days = 5;
 
-        for (int i = 0; i < days; i++) {
-            System.out.println("-------- day " + i + " --------");
-            System.out.println("name, sellIn, quality");
+        for (int i = 1; i <= days; i++) {
+            stringBuilder.append("-------- day ")
+                    .append(i)
+                    .append(" --------")
+                    .append("\n");
+
+            stringBuilder.append("name, sellIn, quality")
+                    .append("\n");
             for (Item item : items) {
-                System.out.println(item);
+                stringBuilder.append(item)
+                        .append("\n");
             }
-            System.out.println();
+
+            stringBuilder.append("\n");
+
             app.updateQuality();
         }
+
+        Approvals.verify(stringBuilder.toString());
     }
 
 }
